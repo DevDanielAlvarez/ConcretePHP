@@ -1,6 +1,7 @@
 <?php
 
-use DanielAlvarez\ConcretePhp\Data\AbstractDTO;
+use Alvarez\ConcretePhp\Data\AbstractDTO;
+
 
 /**
  * 1. Define a concrete class for testing purposes.

@@ -1,8 +1,8 @@
 <?php
 
-namespace DanielAlvarez\ConcretePhp\Data;
+namespace Alvarez\ConcretePhp\Data;
 
-use DanielAlvarez\ConcretePhp\Contracts\IsDTO;
+use Alvarez\ConcretePhp\Contracts\IsDTO;
 
 /**
  * Abstract Data Transfer Object (DTO)
