@@ -1,6 +1,6 @@
 <?php
 
-use Daniel\ConcretePhp\Data\AbstractDTO;
+use DanielAlvarez\ConcretePhp\Data\AbstractDTO;
 
 /**
  * 1. Define a concrete class for testing purposes.
@@ -11,7 +11,8 @@ class UserDto extends AbstractDTO
         public int $id,
         public string $name,
         public string $email
-    ) {}
+    ) {
+    }
 }
 
 /**
@@ -56,7 +57,7 @@ test('it can clone with modified values', function () {
 
 test('it can exclude keys using except', function () {
     $dto = new UserDto(1, 'Daniel Alvarez', 'daniel@alvarez.com');
-    
+
     $filtered = $dto->except(['id', 'email']);
 
     expect($filtered)->toBe(['name' => 'Daniel Alvarez'])

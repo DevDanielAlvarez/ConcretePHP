@@ -1,11 +1,11 @@
 {
-    "name": "daniel/concrete-php",
+    "name": "danielalvarez/concrete-php",
     "description": "Generator of DTOs and Services for Laravel using stubs",
     "type": "library",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Daniel\\ConcretePhp\\": "src/"
+            "DanielAlvarez\\ConcretePhp\\": "src/"
         }
     },
     "autoload-dev": {
