@@ -1,6 +1,6 @@
 <?php
 
-namespace DanielAlvarez\ConcretePhp\Contracts;
+namespace Alvarez\ConcretePhp\Contracts;
 
 interface IsDTO
 {
