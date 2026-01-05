@@ -10,7 +10,7 @@ class ConcreteServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        // Só registra os comandos se estiver rodando via terminal (CLI)
+        // Only register commands if running in console (CLI)
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakeServiceCommand::class,

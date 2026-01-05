@@ -6,6 +6,7 @@ use Alvarez\ConcretePhp\Generators\ServiceGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use function Laravel\Prompts\text;
+use function Laravel\Prompts\select; // Importamos o select
 
 class MakeServiceCommand extends Command
 {
@@ -23,19 +24,28 @@ class MakeServiceCommand extends Command
     {
         UI::displayLogo($this);
 
+        // 1. Pergunta o Nome
         $inputName = $this->argument('name') ?? text(
-            label: 'What is the name of the model?',
+            label: 'What is the name of the service?',
             placeholder: 'E.g. User or Admin/User',
             required: true
         );
 
-        // Limpa "Service/" do início caso o usuário digite por engano
-        $name = preg_replace('/^Service[\/\\\]/i', '', $inputName);
+        // 2. Pergunta o Tipo (Select)
+        $type = select(
+            label: 'What type of service would you like to create?',
+            options: [
+                'model-service' => 'Model Service (Standard)',
+                // Futuros tipos entrarão aqui
+            ],
+            default: 'model-service'
+        );
 
-        $type = 'model-service';
+        $name = preg_replace('/^Service[\/\\\]/i', '', $inputName);
         $generator = new ServiceGenerator();
 
         try {
+            // Pass the selected $type to the generator
             $content = $generator->generate($name, $type);
 
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
@@ -44,9 +54,7 @@ class MakeServiceCommand extends Command
 
             $directory = dirname($path);
 
-            // Forçamos a criação usando a instância do Filesystem de forma mais robusta
             if (!$this->files->isDirectory($directory)) {
-                // O terceiro parâmetro 'true' habilita o modo recursivo (mkdir -p)
                 $this->files->makeDirectory($directory, 0755, true, true);
             }
 
@@ -57,7 +65,7 @@ class MakeServiceCommand extends Command
 
             $this->files->put($path, $content);
 
-            $this->info("Model Service created successfully!");
+            $this->info("{$type} created successfully!");
             $this->line("<fg=gray>Location:</> app/Services/{$relativeDiskPath}Service.php");
 
         } catch (\Exception $e) {
