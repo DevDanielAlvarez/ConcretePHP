@@ -1,0 +1,8 @@
+<?php
+namespace {{ namespace }};
+
+use Alvarez\ConcretePhp\Data\AbstractDTO;
+
+class {{ class }} extends AbstractDTO{
+    
+}
