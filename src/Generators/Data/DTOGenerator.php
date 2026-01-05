@@ -14,11 +14,11 @@ class DTOGenerator
 
         $stub = file_get_contents($stubPath);
 
-        // Explode o nome caso venha com barras (User/CreateUser)
+        // Explode the name if it comes with slashes (User/CreateUser)
         $pathParts = explode('/', str_replace('\\', '/', $name));
-        $className = array_pop($pathParts); // Pega apenas 'CreateUser'
+        $className = array_pop($pathParts); // Get only 'CreateUser'
 
-        // Constrói o namespace dinâmico
+        // Build the dynamic namespace
         $subNamespace = !empty($pathParts) ? '\\' . implode('\\', $pathParts) : '';
         $fullNamespace = 'App\\DTO' . $subNamespace;
 

@@ -45,7 +45,7 @@ class MakeServiceCommand extends Command
         $generator = new ServiceGenerator();
 
         try {
-            // Passamos o $type escolhido para o generator
+            // Pass the selected $type to the generator
             $content = $generator->generate($name, $type);
 
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';

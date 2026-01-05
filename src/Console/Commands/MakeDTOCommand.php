@@ -40,7 +40,7 @@ class MakeDTOCommand extends Command
             required: true
         );
 
-        // Remove "DTO/" ou "DTO\" do início da string caso o usuário tenha digitado
+        // Remove "DTO/" or "DTO\" from the beginning of the string if the user typed it
         $name = preg_replace('/^DTO[\/\\\]/i', '', $inputName);
 
         $generator = new DTOGenerator();
@@ -48,10 +48,10 @@ class MakeDTOCommand extends Command
         try {
             $content = $generator->generate($name, 'dto');
 
-            // Caminho base fixo em app/DTO
+            // Fixed base path at app/DTO
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'DTO';
 
-            // Monta o caminho final garantindo que as barras estejam corretas para o SO
+            // Build the final path ensuring that slashes are correct for the OS
             $relativeDiskPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $name);
             $path = $basePath . DIRECTORY_SEPARATOR . "{$relativeDiskPath}DTO.php";
 
