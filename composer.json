@@ -5,7 +5,8 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Alvarez\\ConcretePhp\\": "src/"
+            "Alvarez\\ConcretePhp\\": "src/",
+            "Alvarez\\Generators\\": "src/Generators/"
         }
     },
     "autoload-dev": {
@@ -20,15 +21,24 @@
         }
     ],
     "minimum-stability": "dev",
+    "require": {
+        "illuminate/database": "12.x-dev",
+        "illuminate/console": "12.x-dev",
+        "illuminate/support": "12.x-dev"
+    },
     "require-dev": {
         "pestphp/pest": "4.x-dev"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Alvarez\\ConcretePhp\\ConcreteServiceProvider"
+            ]
+        }
     },
     "config": {
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }
-    },
-    "require": {
-        "illuminate/database": "12.x-dev"
     }
 }
