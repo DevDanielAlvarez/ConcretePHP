@@ -34,38 +34,44 @@ class MakeDTOCommand extends Command
     {
         UI::displayLogo($this);
 
-        $name = $this->argument('name') ?? text(
+        $inputName = $this->argument('name') ?? text(
             label: 'What is the name of the DTO?',
             placeholder: 'E.g. User/CreateUser',
             required: true
         );
+
+        // Remove "DTO/" ou "DTO\" do início da string caso o usuário tenha digitado
+        $name = preg_replace('/^DTO[\/\\\]/i', '', $inputName);
 
         $generator = new DTOGenerator();
 
         try {
             $content = $generator->generate($name, 'dto');
 
-            // Caminho base alterado para 'DTO' conforme seu pedido
+            // Caminho base fixo em app/DTO
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'DTO';
-            $path = $basePath . DIRECTORY_SEPARATOR . "{$name}DTO.php";
 
-            // Pega o diretório completo do arquivo (ex: app/DTO/User/CreateUser)
+            // Monta o caminho final garantindo que as barras estejam corretas para o SO
+            $relativeDiskPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $name);
+            $path = $basePath . DIRECTORY_SEPARATOR . "{$relativeDiskPath}DTO.php";
+
+            // Obtém o diretório pai do arquivo final
             $directory = dirname($path);
 
-            // Cria todas as pastas recursivamente
-            if (!$this->files->isDirectory($directory)) {
+            // Cria o diretório de forma recursiva (0755, true)
+            if (!$this->files->exists($directory)) {
                 $this->files->makeDirectory($directory, 0755, true);
             }
 
             if ($this->files->exists($path)) {
-                $this->error("DTO already exists!");
+                $this->error("DTO [{$name}DTO] already exists!");
                 return;
             }
 
             $this->files->put($path, $content);
 
             $this->info("DTO created successfully!");
-            $this->line("<fg=gray>Location:</> app/DTO/{$name}DTO.php");
+            $this->line("<fg=gray>Location:</> app/DTO/{$relativeDiskPath}DTO.php");
 
         } catch (\Exception $e) {
             $this->error($e->getMessage());
