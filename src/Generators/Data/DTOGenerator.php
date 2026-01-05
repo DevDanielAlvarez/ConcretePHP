@@ -18,7 +18,7 @@ class DTOGenerator
         // Substituições
         return str_replace(
             ['{{ namespace }}', '{{ class }}'],
-            ['App\\Data', "{$name}Data"], // Namespace padrão onde o arquivo será salvo
+            ['App\\Data', "{$name}DTO"], // Namespace padrão onde o arquivo será salvo
             $stub
         );
     }
