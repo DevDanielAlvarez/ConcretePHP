@@ -7,7 +7,7 @@ class DTOGenerator
     public function generate(string $name, string $type): string
     {
         // Define o caminho do stub específico para DTO
-        $stubPath = __DIR__ . '/Stubs/Data/dto.stub';
+        $stubPath = __DIR__ . '/../Stubs/Data/dto.stub';
 
         if (!file_exists($stubPath)) {
             throw new \Exception("Stub not found at: {$stubPath}");
