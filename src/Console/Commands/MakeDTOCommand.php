@@ -34,40 +34,38 @@ class MakeDTOCommand extends Command
     {
         UI::displayLogo($this);
 
-        // 1. Pergunta o nome se não foi passado como argumento
         $name = $this->argument('name') ?? text(
             label: 'What is the name of the DTO?',
-            placeholder: 'E.g. CreateUser, UpdateTask',
+            placeholder: 'E.g. User/CreateUser',
             required: true
         );
 
-        // 2. Instancia o seu novo gerador especializado
         $generator = new DTOGenerator();
 
         try {
-            // Gera o conteúdo usando o stub de DTO
             $content = $generator->generate($name, 'dto');
 
-            // Define o caminho final: app/Data/{Name}DTO.php
-            $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Data';
+            // Caminho base alterado para 'DTO' conforme seu pedido
+            $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'DTO';
             $path = $basePath . DIRECTORY_SEPARATOR . "{$name}DTO.php";
 
-            // Cria a pasta Data se ela não existir
-            if (!$this->files->isDirectory($basePath)) {
-                $this->files->makeDirectory($basePath, 0755, true);
+            // Pega o diretório completo do arquivo (ex: app/DTO/User/CreateUser)
+            $directory = dirname($path);
+
+            // Cria todas as pastas recursivamente
+            if (!$this->files->isDirectory($directory)) {
+                $this->files->makeDirectory($directory, 0755, true);
             }
 
-            // Evita sobrescrever arquivos existentes
             if ($this->files->exists($path)) {
-                $this->error("DTO [{$name}Data] already exists!");
+                $this->error("DTO already exists!");
                 return;
             }
 
-            // Salva o arquivo
             $this->files->put($path, $content);
 
             $this->info("DTO created successfully!");
-            $this->line("<fg=gray>Location:</> app/Data/{$name}Data.php");
+            $this->line("<fg=gray>Location:</> app/DTO/{$name}DTO.php");
 
         } catch (\Exception $e) {
             $this->error($e->getMessage());

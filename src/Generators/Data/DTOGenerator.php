@@ -6,7 +6,6 @@ class DTOGenerator
 {
     public function generate(string $name, string $type): string
     {
-        // Define o caminho do stub específico para DTO
         $stubPath = __DIR__ . '/../Stubs/Data/dto.stub';
 
         if (!file_exists($stubPath)) {
@@ -15,10 +14,17 @@ class DTOGenerator
 
         $stub = file_get_contents($stubPath);
 
-        // Substituições
+        // Explode o nome caso venha com barras (User/CreateUser)
+        $pathParts = explode('/', str_replace('\\', '/', $name));
+        $className = array_pop($pathParts); // Pega apenas 'CreateUser'
+
+        // Constrói o namespace dinâmico
+        $subNamespace = !empty($pathParts) ? '\\' . implode('\\', $pathParts) : '';
+        $fullNamespace = 'App\\DTO' . $subNamespace;
+
         return str_replace(
             ['{{ namespace }}', '{{ class }}'],
-            ['App\\Data', "{$name}DTO"], // Namespace padrão onde o arquivo será salvo
+            [$fullNamespace, "{$className}DTO"],
             $stub
         );
     }
