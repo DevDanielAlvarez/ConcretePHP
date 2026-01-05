@@ -1,1 +1,12 @@
 vendor/
+# Dependências
+node_modules/
+vendor/
+
+# VitePress específico
+docs/.vitepress/dist/
+docs/.vitepress/cache/
+
+# Outros arquivos temporários
+.DS_Store
+.phpunit.result.cache
