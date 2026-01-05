@@ -5,11 +5,12 @@ namespace Alvarez\ConcretePhp\Console\Commands;
 use Illuminate\Console\Command;
 use Alvarez\Generators\ServiceGenerator;
 use Illuminate\Filesystem\Filesystem;
+use function Laravel\Prompts\text; // Importando o Prompt
 
 class MakeServiceCommand extends Command
 {
-    // O comando que o usuário digitará no terminal
-    protected $signature = 'concrete:service {name : The name of the model}';
+    // Tornamos o 'name' opcional na assinatura
+    protected $signature = 'concrete:service {name? : The name of the model}';
 
     protected $description = 'Create a new Concrete Model Service';
 
@@ -23,28 +24,31 @@ class MakeServiceCommand extends Command
 
     public function handle()
     {
-        $name = $this->argument('name');
+        // Se o nome não for passado via terminal, abrimos um prompt bonito
+        $name = $this->argument('name') ?? text(
+            label: 'What is the name of the model?',
+            placeholder: 'E.g. User, Task, Order',
+            required: true
+        );
+
         $generator = new ServiceGenerator();
 
         try {
             $content = $generator->generate($name, 'model-service');
 
-            // $this->laravel->path() retorna o caminho para a pasta 'app' do projeto
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
             $path = $basePath . DIRECTORY_SEPARATOR . "{$name}Service.php";
 
-            // Garante que a pasta app/Services existe
             if (!$this->files->isDirectory($basePath)) {
                 $this->files->makeDirectory($basePath, 0755, true);
             }
 
             if ($this->files->exists($path)) {
-                $this->error("Service already exists!");
+                $this->error("Service [{$name}Service] already exists!");
                 return;
             }
 
             $this->files->put($path, $content);
-
             $this->info("Service created successfully at: app/Services/{$name}Service.php");
 
         } catch (\Exception $e) {
