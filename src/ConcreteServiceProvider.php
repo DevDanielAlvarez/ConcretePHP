@@ -2,6 +2,7 @@
 
 namespace Alvarez\ConcretePhp;
 
+use Alvarez\ConcretePhp\Console\Commands\MakeDTOCommand;
 use Illuminate\Support\ServiceProvider;
 use Alvarez\ConcretePhp\Console\Commands\MakeServiceCommand;
 
@@ -13,6 +14,7 @@ class ConcreteServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 MakeServiceCommand::class,
+                MakeDTOCommand::class
             ]);
         }
     }
