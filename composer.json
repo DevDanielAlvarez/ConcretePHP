@@ -29,6 +29,6 @@
         }
     },
     "require": {
-        "illuminate/database": "12.x-dev"
+        "illuminate/database": "^10.0|^11.0|^12.0"
     }
 }
