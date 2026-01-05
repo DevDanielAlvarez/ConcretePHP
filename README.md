@@ -1,10 +1,22 @@
-# ConcretePHP — Service Layer & DTO Abstractions
 <p align="center">
-  <img src="assets/img/logo.svg" alt="ConcretePHP Logo" width="220">
+  <img src="assets/img/logo.svg" alt="ConcretePHP Logo" width="240">
 </p>
-[![Packagist Version](https://img.shields.io/packagist/v/alvarez/concrete-php)](https://packagist.org/packages/alvarez/concrete-php) [![PHP](https://img.shields.io/badge/php-%3E%3D8.0-brightgreen)](#) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#)
 
-A lightweight, pragmatic set of abstractions to organize business logic in Laravel: a minimal **Service Layer** (`AbstractModelService`) and a compact **DTO** system (`AbstractDTO`). Designed to keep controllers thin, make domain logic explicit and testable, and play nicely with Eloquent.
+<h1 align="center">ConcretePHP — Service Layer & DTO Abstractions</h1>
+
+<p align="center">
+  <a href="https://packagist.org/packages/alvarez/concrete-php">
+    <img src="https://img.shields.io/packagist/v/alvarez/concrete-php" alt="Packagist Version">
+  </a>
+  <img src="https://img.shields.io/badge/php-%3E%3D8.0-brightgreen" alt="PHP Version">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+</p>
+
+<p align="center">
+  A lightweight, pragmatic set of abstractions to organize business logic in Laravel:
+  a minimal <strong>Service Layer</strong> (<code>AbstractModelService</code>) and a compact
+  <strong>DTO</strong> system (<code>AbstractDTO</code>).
+</p>
 
 ---
 
