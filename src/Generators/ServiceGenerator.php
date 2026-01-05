@@ -1,6 +1,6 @@
 <?php
 
-namespace Alvarez\Generators;
+namespace Alvarez\ConcretePhp\Generators;
 
 /**
  * Class ServiceGenerator

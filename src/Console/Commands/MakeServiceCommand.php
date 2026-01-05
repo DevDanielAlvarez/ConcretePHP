@@ -2,8 +2,8 @@
 
 namespace Alvarez\ConcretePhp\Console\Commands;
 
+use Alvarez\ConcretePhp\Generators\ServiceGenerator;
 use Illuminate\Console\Command;
-use Alvarez\Generators\ServiceGenerator;
 use Illuminate\Filesystem\Filesystem;
 use function Laravel\Prompts\text;
 

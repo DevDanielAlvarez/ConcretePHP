@@ -1,6 +1,6 @@
 <?php
 
-namespace Alvarez\Generators\Data;
+namespace Alvarez\ConcretePhp\Generators\Data;
 
 class DtoGenerator
 {

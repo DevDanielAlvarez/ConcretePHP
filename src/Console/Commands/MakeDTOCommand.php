@@ -2,7 +2,7 @@
 
 namespace Alvarez\ConcretePhp\Console\Commands;
 
-use Alvarez\Generators\Data\DtoGenerator;
+use Alvarez\ConcretePhp\Generators\Data\DtoGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use function Laravel\Prompts\text;
