@@ -38,23 +38,20 @@ class MakeServiceCommand extends Command
         try {
             $content = $generator->generate($name, $type);
 
-            // Caminho base em app/Services
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
-
-            // Corrige as barras para o sistema operacional (Windows vs Linux)
             $relativeDiskPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $name);
             $path = $basePath . DIRECTORY_SEPARATOR . "{$relativeDiskPath}Service.php";
 
-            // Obtém a pasta onde o arquivo ficará (ex: app/Services/Auth)
             $directory = dirname($path);
 
-            // Cria as pastas recursivamente se não existirem
-            if (!$this->files->exists($directory)) {
-                $this->files->makeDirectory($directory, 0755, true);
+            // Forçamos a criação usando a instância do Filesystem de forma mais robusta
+            if (!$this->files->isDirectory($directory)) {
+                // O terceiro parâmetro 'true' habilita o modo recursivo (mkdir -p)
+                $this->files->makeDirectory($directory, 0755, true, true);
             }
 
             if ($this->files->exists($path)) {
-                $this->error("Service already exists at {$path}!");
+                $this->error("Service already exists!");
                 return;
             }
 
