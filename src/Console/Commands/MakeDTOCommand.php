@@ -48,9 +48,9 @@ class MakeDTOCommand extends Command
             // Gera o conteúdo usando o stub de DTO
             $content = $generator->generate($name, 'dto');
 
-            // Define o caminho final: app/Data/{Name}Data.php
+            // Define o caminho final: app/Data/{Name}DTO.php
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Data';
-            $path = $basePath . DIRECTORY_SEPARATOR . "{$name}Data.php";
+            $path = $basePath . DIRECTORY_SEPARATOR . "{$name}DTO.php";
 
             // Cria a pasta Data se ela não existir
             if (!$this->files->isDirectory($basePath)) {
