@@ -1,5 +1,7 @@
 # ConcretePHP — Service Layer & DTO Abstractions
-
+<p align="center">
+  <img src="assets/img/logo.svg" alt="ConcretePHP Logo" width="220">
+</p>
 [![Packagist Version](https://img.shields.io/packagist/v/alvarez/concrete-php)](https://packagist.org/packages/alvarez/concrete-php) [![PHP](https://img.shields.io/badge/php-%3E%3D8.0-brightgreen)](#) [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#)
 
 A lightweight, pragmatic set of abstractions to organize business logic in Laravel: a minimal **Service Layer** (`AbstractModelService`) and a compact **DTO** system (`AbstractDTO`). Designed to keep controllers thin, make domain logic explicit and testable, and play nicely with Eloquent.
