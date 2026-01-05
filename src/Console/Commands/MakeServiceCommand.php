@@ -23,6 +23,7 @@ class MakeServiceCommand extends Command
 
     public function handle()
     {
+        UI::displayLogo($this);
         // 1. Pergunta o Nome (se não enviado via argumento)
         $name = $this->argument('name') ?? text(
             label: 'What is the name of the model?',
