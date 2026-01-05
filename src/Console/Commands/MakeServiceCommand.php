@@ -5,11 +5,10 @@ namespace Alvarez\ConcretePhp\Console\Commands;
 use Illuminate\Console\Command;
 use Alvarez\Generators\ServiceGenerator;
 use Illuminate\Filesystem\Filesystem;
-use function Laravel\Prompts\text; // Importando o Prompt
+use function Laravel\Prompts\text;
 
 class MakeServiceCommand extends Command
 {
-    // Tornamos o 'name' opcional na assinatura
     protected $signature = 'concrete:service {name? : The name of the model}';
 
     protected $description = 'Create a new Concrete Model Service';
@@ -24,17 +23,20 @@ class MakeServiceCommand extends Command
 
     public function handle()
     {
-        // Se o nome não for passado via terminal, abrimos um prompt bonito
+        // 1. Pergunta o Nome (se não enviado via argumento)
         $name = $this->argument('name') ?? text(
             label: 'What is the name of the model?',
             placeholder: 'E.g. User, Task, Order',
             required: true
         );
 
+        // Definimos o tipo fixo como 'model-service' por enquanto
+        $type = 'model-service';
+
         $generator = new ServiceGenerator();
 
         try {
-            $content = $generator->generate($name, 'model-service');
+            $content = $generator->generate($name, $type);
 
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
             $path = $basePath . DIRECTORY_SEPARATOR . "{$name}Service.php";
@@ -49,7 +51,9 @@ class MakeServiceCommand extends Command
             }
 
             $this->files->put($path, $content);
-            $this->info("Service created successfully at: app/Services/{$name}Service.php");
+
+            $this->info("Model Service created successfully!");
+            $this->info("Location: app/Services/{$name}Service.php");
 
         } catch (\Exception $e) {
             $this->error($e->getMessage());
