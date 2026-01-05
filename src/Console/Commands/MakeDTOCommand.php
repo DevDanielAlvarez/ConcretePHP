@@ -2,7 +2,7 @@
 
 namespace Alvarez\ConcretePhp\Console\Commands;
 
-use Alvarez\ConcretePhp\Generators\Data\DtoGenerator;
+use Alvarez\ConcretePhp\Generators\Data\DTOGenerator;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use function Laravel\Prompts\text;
@@ -42,7 +42,7 @@ class MakeDTOCommand extends Command
         );
 
         // 2. Instancia o seu novo gerador especializado
-        $generator = new DtoGenerator();
+        $generator = new DTOGenerator();
 
         try {
             // Gera o conteúdo usando o stub de DTO

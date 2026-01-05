@@ -2,7 +2,7 @@
 
 namespace Alvarez\ConcretePhp\Generators\Data;
 
-class DtoGenerator
+class DTOGenerator
 {
     public function generate(string $name, string $type): string
     {
