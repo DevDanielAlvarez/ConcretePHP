@@ -10,9 +10,7 @@ use function Laravel\Prompts\text;
 class MakeServiceCommand extends Command
 {
     protected $signature = 'concrete:service {name? : The name of the model}';
-
     protected $description = 'Create a new Concrete Model Service';
-
     protected Filesystem $files;
 
     public function __construct(Filesystem $files)
@@ -24,37 +22,46 @@ class MakeServiceCommand extends Command
     public function handle()
     {
         UI::displayLogo($this);
-        // 1. Pergunta o Nome (se não enviado via argumento)
-        $name = $this->argument('name') ?? text(
+
+        $inputName = $this->argument('name') ?? text(
             label: 'What is the name of the model?',
-            placeholder: 'E.g. User, Task, Order',
+            placeholder: 'E.g. User or Admin/User',
             required: true
         );
 
-        // Definimos o tipo fixo como 'model-service' por enquanto
-        $type = 'model-service';
+        // Limpa "Service/" do início caso o usuário digite por engano
+        $name = preg_replace('/^Service[\/\\\]/i', '', $inputName);
 
+        $type = 'model-service';
         $generator = new ServiceGenerator();
 
         try {
             $content = $generator->generate($name, $type);
 
+            // Caminho base em app/Services
             $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
-            $path = $basePath . DIRECTORY_SEPARATOR . "{$name}Service.php";
 
-            if (!$this->files->isDirectory($basePath)) {
-                $this->files->makeDirectory($basePath, 0755, true);
+            // Corrige as barras para o sistema operacional (Windows vs Linux)
+            $relativeDiskPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $name);
+            $path = $basePath . DIRECTORY_SEPARATOR . "{$relativeDiskPath}Service.php";
+
+            // Obtém a pasta onde o arquivo ficará (ex: app/Services/Auth)
+            $directory = dirname($path);
+
+            // Cria as pastas recursivamente se não existirem
+            if (!$this->files->exists($directory)) {
+                $this->files->makeDirectory($directory, 0755, true);
             }
 
             if ($this->files->exists($path)) {
-                $this->error("Service [{$name}Service] already exists!");
+                $this->error("Service already exists at {$path}!");
                 return;
             }
 
             $this->files->put($path, $content);
 
             $this->info("Model Service created successfully!");
-            $this->info("Location: app/Services/{$name}Service.php");
+            $this->line("<fg=gray>Location:</> app/Services/{$relativeDiskPath}Service.php");
 
         } catch (\Exception $e) {
             $this->error($e->getMessage());
