@@ -74,22 +74,22 @@ class ServiceGenerator
      */
     protected function getModelServiceReplacements(): array
     {
-        // Converte barras invertidas em barras normais para facilitar o explode
+        // Convert backslashes to forward slashes to facilitate explode
         $pathParts = explode('/', str_replace('\\', '/', $this->name));
 
-        // Pega apenas o nome final (ex: 'User')
+        // Get only the final name (e.g. 'User')
         $baseName = array_pop($pathParts);
 
-        // Constrói o sub-namespace se houver pastas (ex: '\Auth')
+        // Build the sub-namespace if there are folders (e.g. '\Auth')
         $subNamespace = !empty($pathParts) ? '\\' . implode('\\', $pathParts) : '';
 
-        // Namespace dinâmico
+        // Dynamic namespace
         $namespace = "App\\Services" . $subNamespace;
 
-        // Classe: 'UserService'
+        // Class: 'UserService'
         $class = $baseName . "Service";
 
-        // Model: 'User' (Geralmente o model está na raiz de App\Models ou conforme sua preferência)
+        // Model: 'User' (Usually the model is at the root of App\Models or according to your preference)
         $model = $baseName;
 
         return [
