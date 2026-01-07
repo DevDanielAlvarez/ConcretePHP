@@ -91,7 +91,7 @@ class MakeServiceCommand extends Command
             ]
         );
 
-        $path = text("🧭 finally what will be path of $name");
+        $path = text("🧭 finally what will be path of $name", default: 'Services/');
 
         return compact('name', 'type', 'repository', 'path');
     }
