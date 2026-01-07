@@ -38,7 +38,7 @@ class MakeServiceCommand extends Command
                 'model-service' => 'Model Service (Standard)',
                 // Futuros tipos entrarão aqui
             ],
-            default: 'model-service'
+            required: true
         );
 
         $name = preg_replace('/^Service[\/\\\]/i', '', $inputName);
