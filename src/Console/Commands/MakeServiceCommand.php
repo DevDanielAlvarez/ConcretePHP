@@ -23,53 +23,76 @@ class MakeServiceCommand extends Command
     public function handle()
     {
         UI::displayLogo($this);
+        $this->getUserArguments();
+        // // 1. Pergunta o Nome
+        // $inputName = $this->argument('name') ?? text(
+        //     label: 'What is the name of the service?',
+        //     placeholder: 'E.g. User or Admin/User',
+        //     required: true
+        // );
 
-        // 1. Pergunta o Nome
-        $inputName = $this->argument('name') ?? text(
-            label: 'What is the name of the service?',
-            placeholder: 'E.g. User or Admin/User',
-            required: true
-        );
+        // // 2. Pergunta o Tipo (Select)
+        // $type = select(
+        //     label: 'What type of service would you like to create?',
+        //     options: [
+        //         'model-service' => 'Model Service (Standard)',
+        //     ],
+        //     required: true
+        // );
 
-        // 2. Pergunta o Tipo (Select)
+        // $name = preg_replace('/^Service[\/\\\]/i', '', $inputName);
+        // $generator = new ServiceGenerator();
+
+        // try {
+        //     // Pass the selected $type to the generator
+        //     $content = $generator->generate($name, $type);
+
+        //     $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
+        //     $relativeDiskPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $name);
+        //     $path = $basePath . DIRECTORY_SEPARATOR . "{$relativeDiskPath}Service.php";
+
+        //     $directory = dirname($path);
+
+        //     if (!$this->files->isDirectory($directory)) {
+        //         $this->files->makeDirectory($directory, 0755, true, true);
+        //     }
+
+        //     if ($this->files->exists($path)) {
+        //         $this->error("Service already exists!");
+        //         return;
+        //     }
+
+        //     $this->files->put($path, $content);
+
+        //     $this->info("{$type} created successfully!");
+        //     $this->line("<fg=gray>Location:</> app/Services/{$relativeDiskPath}Service.php");
+
+        // } catch (\Exception $e) {
+        //     $this->error($e->getMessage());
+        // }
+    }
+
+    public function getUserArguments()
+    {
         $type = select(
-            label: 'What type of service would you like to create?',
+            label: '🌟 What is type of service?',
             options: [
-                'model-service' => 'Model Service (Standard)',
-                // Futuros tipos entrarão aqui
+                '🗃️ Service to Model'
             ],
             required: true
         );
 
-        $name = preg_replace('/^Service[\/\\\]/i', '', $inputName);
-        $generator = new ServiceGenerator();
+        $name = text('💫 What is service name?');
 
-        try {
-            // Pass the selected $type to the generator
-            $content = $generator->generate($name, $type);
+        $repository = select(
+            label: '🥰 What will be ORM of this service?',
+            options: [
+                'Eloquent'
+            ]
+        );
 
-            $basePath = $this->laravel->path() . DIRECTORY_SEPARATOR . 'Services';
-            $relativeDiskPath = str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $name);
-            $path = $basePath . DIRECTORY_SEPARATOR . "{$relativeDiskPath}Service.php";
+        $path = text("🧭 finally what will be path of $name");
 
-            $directory = dirname($path);
-
-            if (!$this->files->isDirectory($directory)) {
-                $this->files->makeDirectory($directory, 0755, true, true);
-            }
-
-            if ($this->files->exists($path)) {
-                $this->error("Service already exists!");
-                return;
-            }
-
-            $this->files->put($path, $content);
-
-            $this->info("{$type} created successfully!");
-            $this->line("<fg=gray>Location:</> app/Services/{$relativeDiskPath}Service.php");
-
-        } catch (\Exception $e) {
-            $this->error($e->getMessage());
-        }
+        return compact('name', 'type', 'repository', 'path');
     }
 }
