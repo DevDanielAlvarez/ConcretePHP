@@ -77,7 +77,7 @@ class MakeServiceCommand extends Command
         $type = select(
             label: '🌟 What is type of service?',
             options: [
-                '🗃️ Service to Model'
+                'Service to Model'
             ],
             required: true
         );
